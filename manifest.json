@@ -1,0 +1,15 @@
+{
+  "id": "/retail/",
+  "name": "Dashboard Retail SportGuru",
+  "short_name": "Retail SG",
+  "start_url": "/retail/",
+  "scope": "/retail/",
+  "display": "standalone",
+  "background_color": "#5b0098",
+  "theme_color": "#5b0098",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
