@@ -2,59 +2,214 @@
 <html lang="ro">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>Dashboard Retail SG</title>
 <meta name="theme-color" content="#5b0098">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Retail SG">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
-  :root{ --accent:#5b0098; --bg:#f4f5f7; --ink:#15181d; --muted:#6b7280; --card:#fff; }
-  @media (prefers-color-scheme: dark){ :root{ --bg:#14121a; --ink:#f2f0f5; --muted:#a39fae; --card:#1f1c27; } }
+  :root{
+    --bg:#f4f2f7; --card:#fff; --ink:#17141d; --muted:#6c6878; --line:#e7e3ee;
+    --brand:#5b0098; --brand-soft:#efe6fa;
+    --work:#0f8a5f; --work-bg:#def3ea;
+    --pause:#b7791f; --pause-bg:#fdf2dc;
+    --comp:#6b7280; --comp-bg:#eef0f3;
+    --off:#8a8f99; --off-bg:#f2f3f5;
+    --co:#1d6fdc; --co-bg:#e3eefc;
+    --cm:#c0262d; --cm-bg:#fde8e8;
+  }
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);padding:24px 16px}
-  .card{background:var(--card);border-radius:20px;padding:28px 22px;max-width:420px;width:100%;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-  img.logo{width:96px;height:96px;border-radius:22px}
-  h1{font-size:22px;margin:16px 0 4px}
-  p{color:var(--muted);margin:0 0 20px;font-size:15px;line-height:1.45}
-  a.btn{display:block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:15px;border-radius:14px}
-  #hint{margin-top:22px;text-align:left;font-size:14px;color:var(--muted);line-height:1.5}
-  #hint b{color:var(--ink)}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px}
+  .wrap{max-width:720px;margin:0 auto;padding:16px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  header h1{font-size:18px;margin:0;line-height:1.2}
+  header small{display:block;color:var(--muted);font-weight:400;font-size:12px;margin-top:3px}
+  .icon{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 11px;font-size:15px;cursor:pointer;color:var(--ink)}
+  .card{background:var(--card);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .hero{background:var(--brand);color:#fff}
+  .hero .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.07em;opacity:.8}
+  .hero .big{font-size:52px;font-weight:800;line-height:1;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+  .hero .sub{font-size:15px;opacity:.95}
+  .hero .sub b{font-size:18px}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+  .tile{border-radius:14px;padding:12px 14px;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.05);border-left:5px solid var(--c)}
+  .tile .n{font-size:28px;font-weight:800;color:var(--c);font-variant-numeric:tabular-nums}
+  .tile .t{font-size:13px;color:var(--muted);margin-top:2px}
+  .k-work{--c:var(--work)} .k-pause{--c:var(--pause)} .k-comp{--c:var(--comp)}
+  .k-off{--c:var(--off)} .k-co{--c:var(--co)} .k-cm{--c:var(--cm)}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:20px 4px 8px}
+  .store{background:var(--card);border-radius:14px;margin:8px 0;box-shadow:0 1px 2px rgba(0,0,0,.05);overflow:hidden}
+  .store summary{list-style:none;cursor:pointer;padding:13px 14px;display:flex;align-items:center;gap:10px}
+  .store summary::-webkit-details-marker{display:none}
+  .store .nm{font-weight:700;flex:0 0 92px;font-size:15px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;flex:1}
+  .chip{display:inline-flex;align-items:center;gap:4px;border-radius:8px;padding:3px 7px;font-size:12px;font-weight:700;background:var(--b);color:var(--c);font-variant-numeric:tabular-nums}
+  .chip.zero{opacity:.35}
+  .c-work{--c:var(--work);--b:var(--work-bg)} .c-pause{--c:var(--pause);--b:var(--pause-bg)}
+  .c-comp{--c:var(--comp);--b:var(--comp-bg)} .c-off{--c:var(--off);--b:var(--off-bg)}
+  .c-co{--c:var(--co);--b:var(--co-bg)} .c-cm{--c:var(--cm);--b:var(--cm-bg)}
+  .arrow{color:var(--muted);transition:transform .15s}
+  details[open] .arrow{transform:rotate(90deg)}
+  .det{padding:0 14px 14px;border-top:1px solid var(--line)}
+  .grp{margin-top:10px}
+  .grp b{font-size:13px;display:block;margin-bottom:2px}
+  .grp div{color:var(--muted);font-size:14px;line-height:1.45}
+  .late{color:var(--cm);font-weight:700}
+  .err{background:var(--cm-bg);color:#8f1d22;border-radius:12px;padding:12px 14px;font-size:14px}
+  .muted{color:var(--muted);font-size:12px}
+  .stale{color:var(--cm);font-weight:700}
+  .loading{text-align:center;color:var(--muted);padding:48px 0}
+  .legend{display:flex;flex-wrap:wrap;gap:6px;margin:6px 4px}
+  .pinbox{max-width:340px;margin:40px auto;text-align:center}
+  .pinbox h2{font-size:18px;color:var(--ink);text-transform:none;letter-spacing:0;margin:0 0 6px}
+  .pinbox input{width:100%;font-size:26px;letter-spacing:.35em;text-align:center;padding:14px;border:1px solid var(--line);border-radius:14px;margin:14px 0 10px;background:var(--card);color:var(--ink)}
+  .pinbox button{width:100%;border:none;border-radius:14px;padding:15px;font-size:17px;font-weight:700;color:#fff;background:var(--brand);cursor:pointer}
+  .pinbox button:disabled{opacity:.5}
+  .pinmsg{color:var(--cm);font-size:14px;min-height:1.2em;margin-top:10px}
+  .iesire{color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;background:none;border:none;padding:0}
 </style>
 </head>
 <body>
-<div class="card">
-  <img class="logo" src="icon-192.png" alt="">
-  <h1>Dashboard Retail SportGuru</h1>
-  <p id="msg">Situația echipelor din toate magazinele, actualizată la 5 minute.</p>
-  <a class="btn" id="deschide" href="#">Deschide dashboard-ul</a>
-  <div id="hint">
-    <b>Pune iconița pe telefon:</b><br>
-    <b>iPhone</b> (din Safari): butonul Partajare ⬆️ → „Adaugă pe ecranul principal”.<br>
-    <b>Android</b> (din Chrome): meniul ⋮ → „Instalează aplicația” sau „Adaugă pe ecranul de pornire”.
-  </div>
+<div class="wrap">
+  <header>
+    <h1>Dashboard Retail<small id="sub">Se încarcă…</small></h1>
+    <button class="icon" onclick="incarca()" title="Reîncarcă">⟳</button>
+  </header>
+  <div id="continut"><div class="loading">Se încarcă situația magazinelor…</div></div>
 </div>
+
 <script>
-  // Linkul aplicației (Deploy → Manage deployments → Copiază). Se schimbă doar aici.
-  var APLICATIE = 'https://script.google.com/macros/s/AKfycbwA8sX3wyS7sv0ZcUL8NOOT2jOFddE0BsW9EHSjgfbsccbKUANEKdjsu3ZTG5cSnMoSUw/exec';
+  // Adresa scriptului (Deploy → Manage deployments → Copiază). Se schimbă doar aici.
+  var API = 'https://script.google.com/macros/s/AKfycbwA8sX3wyS7sv0ZcUL8NOOT2jOFddE0BsW9EHSjgfbsccbKUANEKdjsu3ZTG5cSnMoSUw/exec';
+  var date = null, deschise = {};
+  function st(k, v){ try{ if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){ return null; } }
+  var PIN = st('sg_retail_pin') || '';
 
-  // păstrează ?nume=... dacă e în link (alege automat angajatul)
-  var tinta = APLICATIE + (location.search || '');
-  document.getElementById('deschide').href = tinta;
-
-  // deschisă de pe iconița de pe ecran → intră direct în program
-  var dePeEcran = window.navigator.standalone === true ||
-    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
-  if (dePeEcran) {
-    document.getElementById('msg').textContent = 'Se deschide dashboard-ul…';
-    document.getElementById('hint').style.display = 'none';
-    location.replace(tinta);
+  function ecranPin(msg){
+    PIN = ''; st('sg_retail_pin', null);
+    document.getElementById('sub').textContent = 'Acces cu PIN';
+    document.getElementById('continut').innerHTML =
+      '<div class="card pinbox"><h2>Introdu PIN-ul</h2>' +
+      '<div class="muted">PIN-ul se cere o singură dată pe acest telefon.</div>' +
+      '<input id="pin" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="12">' +
+      '<button id="pinBtn" onclick="trimitePin()">Intră</button>' +
+      '<div class="pinmsg" id="pinMsg">' + esc(msg || '') + '</div></div>';
+    var i = document.getElementById('pin');
+    i.addEventListener('keydown', function(e){ if (e.key === 'Enter') trimitePin(); });
+    i.focus();
   }
+  function trimitePin(){
+    var v = (document.getElementById('pin').value || '').replace(/\D/g, '');
+    if (v.length < 4) { document.getElementById('pinMsg').textContent = 'PIN-ul are cel puțin 4 cifre.'; return; }
+    document.getElementById('pinBtn').disabled = true;
+    PIN = v; incarca(true);
+  }
+  function iesire(){ ecranPin(''); }
+  function arataEroare(m){
+    var b = document.getElementById('pinBtn'); if (b) { b.disabled = false; var pm = document.getElementById('pinMsg'); if (pm) { pm.textContent = m; return; } }
+    document.getElementById('continut').innerHTML = '<div class="err">' + esc(m) + '</div>';
+    document.getElementById('sub').textContent = '';
+  }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function ora(ms){ var d = new Date(ms); return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2); }
+  function n(a){ return (a || []).length; }
+
+  function incarca(dinFormular){
+    if (!PIN) return ecranPin('');
+    if (!dinFormular) document.getElementById('sub').textContent = 'Se încarcă…';
+    // text/plain: fără cerere prealabilă CORS; fără cookie-uri Google, deci fără conflict de conturi
+    fetch(API, { method: 'POST', body: JSON.stringify({ pin: PIN }), headers: { 'Content-Type': 'text/plain;charset=utf-8' } })
+      .then(function(raspuns){ return raspuns.json(); })
+      .then(function(r){
+        if (r.ok) { st('sg_retail_pin', PIN); date = r.date; return randeaza(); }
+        var m = String(r.eroare || 'Eroare necunoscută.');
+        if (/PIN|încercări/i.test(m)) return ecranPin(m);
+        arataEroare(m);
+      })
+      .catch(function(){ arataEroare('Nu am putut încărca datele. Verifică internetul și apasă ⟳.'); });
+  }
+
+  function randeaza(){
+    var mag = date.magazine, ok = mag.filter(function(m){ return !m.eroare; });
+    var tot = { tura:0, pauza:0, comp:0, liber:0, co:0, cm:0, d:0 };
+    ok.forEach(function(m){
+      tot.tura += n(m.inTura); tot.pauza += n(m.pauza); tot.comp += n(m.liberComp);
+      tot.liber += n(m.liber); tot.co += n(m.co); tot.cm += n(m.cm); tot.d += n(m.delegatie);
+    });
+
+    var vechime = date.actualizat ? Math.round((date.acum - date.actualizat) / 60000) : null;
+    document.getElementById('sub').innerHTML = date.actualizat
+      ? 'Situația de la ' + ora(date.actualizat) + (vechime > 15 ? ' · <span class="stale">neactualizat de ' + vechime + ' min</span>' : '') + ' · ' + mag.length + ' magazine'
+      : 'Nicio colectare încă';
+
+    var h = '';
+    h += '<div class="card hero"><div class="lbl">În tură acum · toată rețeaua</div>' +
+         '<div class="big">' + tot.tura + '</div>' +
+         '<div class="sub">din care <b>' + tot.pauza + '</b> în pauză de masă</div></div>';
+
+    h += '<div class="tiles">' +
+      tile('k-comp', tot.comp, 'Liber compensator') +
+      tile('k-off', tot.liber, 'Zi liberă') +
+      tile('k-co', tot.co, 'Concediu de odihnă') +
+      tile('k-cm', tot.cm, 'Concediu medical') + '</div>';
+    if (tot.d) h += '<div class="muted" style="margin:0 4px">+ ' + tot.d + ' în delegație</div>';
+
+    h += '<h2>Pe magazine</h2>';
+    mag.forEach(function(m, i){ h += cardMagazin(m, i); });
+
+    h += '<div class="legend">' +
+      '<span class="chip c-work">● în tură</span><span class="chip c-pause">☕ pauză</span>' +
+      '<span class="chip c-comp">L* liber comp.</span><span class="chip c-off">L liber</span>' +
+      '<span class="chip c-co">CO</span><span class="chip c-cm">CM</span></div>' +
+      '<p class="muted" style="margin:8px 4px">„În tură acum” = angajații a căror tură din program include ora curentă, plus cei în pauză. Atinge un magazin pentru nume.</p>' +
+      '<p style="margin:14px 4px"><button class="iesire" onclick="iesire()">Ieșire (șterge PIN-ul de pe acest telefon)</button></p>';
+
+    document.getElementById('continut').innerHTML = h;
+    document.querySelectorAll('details.store').forEach(function(d){
+      d.addEventListener('toggle', function(){ deschise[d.dataset.i] = d.open; });
+    });
+  }
+
+  function tile(k, val, txt){ return '<div class="tile ' + k + '"><div class="n">' + val + '</div><div class="t">' + txt + '</div></div>'; }
+  function chip(c, sym, val){ return '<span class="chip ' + c + (val ? '' : ' zero') + '">' + sym + ' ' + val + '</span>'; }
+
+  function cardMagazin(m, i){
+    if (m.eroare) {
+      return '<div class="store"><div style="padding:13px 14px"><div class="nm" style="margin-bottom:6px">' + esc(m.nume) +
+             '</div><div class="err">' + esc(m.eroare) + '</div></div></div>';
+    }
+    var pz = m.pauza || [];
+    var sum = '<summary><span class="nm">' + esc(m.nume) + '</span><span class="chips">' +
+      chip('c-work', '●', n(m.inTura)) + chip('c-pause', '☕', pz.length) + chip('c-comp', 'L*', n(m.liberComp)) +
+      chip('c-off', 'L', n(m.liber)) + chip('c-co', 'CO', n(m.co)) + chip('c-cm', 'CM', n(m.cm)) +
+      '</span><span class="arrow">›</span></summary>';
+    var det = '<div class="det">';
+    det += grp('În tură acum', m.inTura);
+    if (pz.length) det += '<div class="grp"><b>În pauză</b><div>' + pz.map(function(p){
+      return p.depasit ? '<span class="late">' + esc(p.nume) + ' — trebuia la ' + ora(p.pana) + '</span>'
+                       : esc(p.nume) + ' — până la ' + ora(p.pana);
+    }).join('<br>') + '</div></div>';
+    det += grp('Liber compensator', m.liberComp) + grp('Zi liberă', m.liber) +
+           grp('Concediu de odihnă', m.co) + grp('Concediu medical', m.cm) +
+           grp('Delegație', m.delegatie) + grp('Programați azi', m.programati, true) + grp('Alte coduri', m.altele);
+    det += '</div>';
+    return '<details class="store" data-i="' + i + '"' + (deschise[i] ? ' open' : '') + '>' + sum + det + '</details>';
+  }
+
+  function grp(titlu, lista, peRanduri){
+    if (!lista || !lista.length) return '';
+    return '<div class="grp"><b>' + titlu + ' (' + lista.length + ')</b><div>' + lista.map(esc).join(peRanduri ? '<br>' : ', ') + '</div></div>';
+  }
+
+  // reîncărcare automată: la fiecare minut și la revenirea în aplicație
+  setInterval(function(){ if (!document.hidden && PIN && date) incarca(); }, 60 * 1000);
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden && PIN && date) incarca(); });
+  incarca();
 </script>
 </body>
 </html>
